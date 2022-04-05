@@ -68,13 +68,13 @@ export const Container = styled.div`
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
-    div {
+    form {
       max-width: 400px;
     }
   }
 
   @media screen and (min-width: 1024px) and (max-width: 1920px) {
-    div {
+    form {
       max-width: 500px;
 
       p {

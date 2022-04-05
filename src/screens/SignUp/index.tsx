@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import * as S from './styled';
 
 export const SignUp = () => {
-  const loginValidationSchema = yup.object().shape({
+  const singUpValidationSchema = yup.object().shape({
     name: yup
       .string()
       .required(),
@@ -24,7 +24,7 @@ export const SignUp = () => {
       <Formik
         initialValues={{ name: '', email: '', password: '' }}
         onSubmit={(values) => console.log(values)}
-        validationSchema={loginValidationSchema}
+        validationSchema={singUpValidationSchema}
       >
         {({
           values,

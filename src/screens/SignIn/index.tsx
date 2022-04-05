@@ -1,10 +1,12 @@
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import * as S from './styled';
 
 export const SignIn = () => {
+  const navigation = useNavigate();
+
   const loginValidationSchema = yup.object().shape({
     email: yup
       .string()
@@ -20,7 +22,7 @@ export const SignIn = () => {
     <S.Container>
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => {console.log(values); navigation('/home') } }
         validationSchema={loginValidationSchema}
       >
         {({
@@ -33,7 +35,6 @@ export const SignIn = () => {
           isSubmitting,
           isValid,
           dirty,
-          /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
             <h1>Login</h1>
