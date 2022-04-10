@@ -1,20 +1,21 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ModalProvider } from 'styled-react-modal';
 
-import GlobalStyle from './styles/global';
+import AppProvider from './hooks';
 import Routes from './routes';
-import { Header } from './components/Header';
+import GlobalStyle from './styles/global';
 
 const App = () => {
   return (
-    <ModalProvider>
-      <Router>
-        { window.location.pathname === '/' || window.location.pathname === '/sign-up' ? null : (<Header />) }
-        <Routes />
-        
-        <GlobalStyle />
-      </Router>
-    </ModalProvider>
+    <AppProvider>
+      <ModalProvider>
+        <Router>
+          <Routes />
+          
+          <GlobalStyle />
+        </Router>
+      </ModalProvider>
+    </AppProvider>
   );
 };
 

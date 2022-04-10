@@ -1,10 +1,17 @@
 import { Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
+import { useAuth } from '../../hooks/auth';
 
 import * as S from './styled';
 
+interface IFormData {
+  email: string;
+  password: string;
+}
+
 export const SignIn = () => {
+  const { signIn } = useAuth();
   const navigation = useNavigate();
 
   const loginValidationSchema = yup.object().shape({
@@ -18,11 +25,20 @@ export const SignIn = () => {
       .required('Senha é obrigatório'),
   });
 
+  async function handleOnSubmit(data: IFormData) {
+    await signIn({
+      email: data.email,
+      password: data.password,
+    });
+
+    navigation('/home')
+  }
+
   return (
     <S.Container>
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={(values) => {console.log(values); navigation('/home') } }
+        onSubmit={(values) => handleOnSubmit(values) }
         validationSchema={loginValidationSchema}
       >
         {({
