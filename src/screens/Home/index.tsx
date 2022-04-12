@@ -1,11 +1,14 @@
 import { Motion } from '../../components/Motion';
+import { useAuth } from '../../hooks/auth';
 import * as S from './styled';
 
 const HomeComponent = () => {
+  const { user } = useAuth();
+
   return (
     <>
       <S.Container>
-        <h1>Bem vindo John Doe</h1>
+        <h1>Bem vindo {user.name}!</h1>
 
         <iframe 
           title="Acidentes nas Estradas Brasileiras - Analise Influenciadores" 

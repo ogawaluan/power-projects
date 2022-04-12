@@ -6,6 +6,7 @@ export const Container = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 export const ProfileContainer = styled.div`
@@ -62,7 +63,7 @@ export const Description = styled.p`
   color: #000;
 
   span {
-    color: #3A92D8;
+    color: #d4910c;
   }
 
   @media screen and (min-width: 768px) {
@@ -74,8 +75,8 @@ export const Description = styled.p`
 export const Button = styled.button`
   width: 100%;
   padding: 15px;
-  color: #fff;
-  background: linear-gradient(to right, #3A92D8, #874BB1);
+  color: #000;
+  background: linear-gradient(to right, #f6dd72, #d4910c);
   text-align: center;
   text-decoration: none;
   border: none;
@@ -95,6 +96,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: #fff;
   border-radius: 8px;
   padding: 40px;

@@ -7,11 +7,11 @@ import { SignIn } from '../screens/SignIn';
 import { SignUp } from '../screens/SignUp';
 import { Profile } from '../screens/Profile';
 import { RequireAuth } from './RequireAuth';
+import { AddProject } from '../screens/Projects/AddProject';
+import { UpdateProject } from '../screens/Projects/UpdateProject';
 
 const Routes = () => {
   const login = localStorage.getItem('@PowerProjects:token');
-  const navigation = useNavigate();
-  console.log(login);
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -39,6 +39,22 @@ const Routes = () => {
           element={
             <RequireAuth>
               <Projects />
+            </RequireAuth>
+          } 
+        />
+        <Route 
+          path="/add-project" 
+          element={
+            <RequireAuth>
+              <AddProject />
+            </RequireAuth>
+          } 
+        />
+        <Route 
+          path="/update-project" 
+          element={
+            <RequireAuth>
+              <UpdateProject />
             </RequireAuth>
           } 
         />

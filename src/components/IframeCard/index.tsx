@@ -1,14 +1,16 @@
-import { useState } from 'react';
-import { FiEdit } from 'react-icons/fi';
-import { GoTrashcan } from 'react-icons/go';
+import { ReactNode, useState } from 'react';
 
+import powerBiLogo from '../../assets/powerbi.png';
 import * as S from './styled';
 
 interface IFrameCardProps {
-  name: string;
+  id?: string;
+  name?: string;
+  link: string;
+  children?: ReactNode;
 }
 
-const ModalComponent = () => {
+const ModalComponent = ({ link }: IFrameCardProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   function toggleModal() {
@@ -17,7 +19,9 @@ const ModalComponent = () => {
 
   return (
     <S.Button onClick={toggleModal}>
-      <S.Image src="https://avatars.githubusercontent.com/u/40743787?v=4" alt="Ivo" />
+      <S.ImageContainer>
+        <S.Image src={powerBiLogo} alt="Ivo" />
+      </S.ImageContainer>
       <S.StyledModal
         isOpen={isOpen}
         onBackgroundClick={toggleModal}
@@ -26,7 +30,7 @@ const ModalComponent = () => {
       >
         <S.IFrame 
           title="Acidentes nas Estradas Brasileiras - Analise Influenciadores"
-          src="https://app.powerbi.com/view?r=eyJrIjoiOWMxZWE5YTQtN2QzMi00ZTUzLThjN2EtYTc3OGE2Y2Y1MWYyIiwidCI6ImMwZjU3ZTAxLTk1YWItNDg0Yi1hNjQwLTBmMGJlYjVlZWNhOSJ9" 
+          src={link} 
           frameBorder="0" 
           allowFullScreen={true} 
         />
@@ -36,23 +40,15 @@ const ModalComponent = () => {
   );
 }; 
 
-export function IFrameCard({ name }: IFrameCardProps) {
+export function IFrameCard({ name, link, children }: IFrameCardProps) {
   return (
     <S.Container>
       <S.Content>
         <S.Title>{name}</S.Title>
 
-        <ModalComponent />
+        <ModalComponent link={link} />
 
-        <S.ActionContainer>
-          <S.ActionButton>
-            <FiEdit size={24} />
-          </S.ActionButton>
-
-          <S.ActionButton>
-            <GoTrashcan size={24} />
-          </S.ActionButton>
-        </S.ActionContainer>
+        {children}
       </S.Content>
     </S.Container>
   );

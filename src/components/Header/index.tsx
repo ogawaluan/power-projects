@@ -1,19 +1,27 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import logo from "../../assets/logo.svg";
 import Home from "../../assets/home-solid.svg";
 import Documents from "../../assets/draft.svg";
 import PowerOff from "../../assets/power-off-solid.svg";
 
 import * as S from './styled';
-import { Link } from "react-router-dom";
+import { useAuth } from "../../hooks/auth";
 
 export function Header() {
   const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-
   const [profileClick, setprofileClick] = useState(false);
+  const [userLogout, setUserLogout] = useState(false);
+  const { signOut, user } = useAuth();
+  const navigation = useNavigate()
+  
+  const handleClick = () => setClick(!click);
   const handleProfileClick = () => setprofileClick(!profileClick);
+
+  function handleSignOut() {
+    setUserLogout(!userLogout);
+    signOut();
+  }
 
   return (
     <S.Container>
@@ -21,9 +29,6 @@ export function Header() {
         Click
       </S.Button>
       <S.SidebarContainer clicked={click}>
-        <S.Logo>
-          <img src={logo} alt="logo" />
-        </S.Logo>
         <S.SlickBar clicked={click}>
           <S.Item
             onClick={() => setClick(false)}
@@ -41,6 +46,14 @@ export function Header() {
             <img src={Documents} alt="Documents" />
             <S.Text clicked={click}>Projects</S.Text>
           </S.Item>
+          <S.Item
+            onClick={() => setClick(false)}
+            className={(props) => props.isActive ? 'active' : ''}
+            to="/add-project"
+          >
+            <S.Icon />
+            <S.Text clicked={click}>Add Project</S.Text>
+          </S.Item>
         </S.SlickBar>
 
         <S.Profile clicked={profileClick}>
@@ -51,11 +64,11 @@ export function Header() {
           />
           <S.Details clicked={profileClick}>
             <S.Name>
-              <h4>Jhon&nbsp;Doe</h4>
+              <h4>{user.name}</h4>
               <Link to="/profile" onClick={() => setprofileClick(false)}>view&nbsp;profile</Link>
             </S.Name>
 
-            <S.Logout>
+            <S.Logout onClick={handleSignOut}>
               <img src={PowerOff} alt="logout" />
             </S.Logout>
           </S.Details>

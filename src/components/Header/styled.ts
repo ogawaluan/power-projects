@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import { NavLink } from "react-router-dom";
 import styled from 'styled-components';
+import { FiFilePlus } from 'react-icons/fi';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   clicked: boolean
@@ -188,4 +189,9 @@ export const Logout = styled.button`
       opacity: 0.5;
     }
   }
+`;
+
+export const Icon = styled(FiFilePlus)`
+  font-size: 26px;
+  margin-left: -4px;
 `;
