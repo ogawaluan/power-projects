@@ -1,10 +1,21 @@
 import { Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
+import { useToast } from '../../hooks/toast';
+import api from '../../services/api';
 
 import * as S from './styled';
 
+interface IFormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export const SignUp = () => {
+  const { addToast } = useToast();
+  const navigation = useNavigate();
+
   const singUpValidationSchema = yup.object().shape({
     name: yup
       .string()
@@ -19,11 +30,33 @@ export const SignUp = () => {
       .required('Senha é obrigatório'),
   });
 
+  async function handleOnSubmit(data: IFormData) {
+    try {
+      await api.post('/users', data);
+
+      navigation('/');
+      
+      addToast({
+        type: 'sucess',
+        title: 'Conta criada',
+        description: 'Agora você pode acessar a plataforma!',
+      });
+    } catch(e) {
+      console.log(e);
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao criar a conta',
+        description: 'Tente novamente',
+      });
+    }
+  }
+
   return (
     <S.Container>
       <Formik
         initialValues={{ name: '', email: '', password: '' }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => handleOnSubmit(values)}
         validationSchema={singUpValidationSchema}
       >
         {({
@@ -52,7 +85,7 @@ export const SignUp = () => {
             <p className="errors">{errors.name && errors.name}</p>
             <input
               id="email"
-              name="email"
+              name=";email"
               placeholder='Digite seu e-mail'
               type="email"
               onChange={handleChange('email')}

@@ -9,6 +9,7 @@ export const Container = styled.div`
 
   h1 {
     margin-bottom: 40px;
+    color: #000;
   }
 
   iframe {

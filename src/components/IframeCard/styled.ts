@@ -14,15 +14,16 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border-radius: 8px;
+  border-radius: 16px;
   height: 400px;
   width: 300px;
   padding: 20px;
-  background-color: red;
+  background-color: #020808;
 `;
 
 export const Title = styled.h1`
   margin-bottom: 20px;
+  color: #d4910c;
 `;
 
 export const Button = styled.button`
@@ -31,34 +32,24 @@ export const Button = styled.button`
   transition: opacity 0.5s;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.5;
   }
+`;
+
+export const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  height: 225px;
+  width: 200px;
+  background-color: #d4910c;
 `;
 
 export const Image = styled.img`
   height: auto;
-  width: 200px;
+  width: 150px;
   border-radius: 8px;
-`;
-
-export const ActionContainer = styled.div`
-  margin-top: 30px;
-  display: flex;
-  justify-content: end;
-  width: 100%;
-`;
-
-export const ActionButton = styled.button`
-  display: flex;
-  border: none;
-  padding: 10px;
-  margin-left: 20px;
-  border-radius: 8px;
-  transition: opacity 0.5s;
-
-  &:hover {
-    opacity: 0.8;
-  }
 `;
 
 export const StyledModal = styled(Modal)`

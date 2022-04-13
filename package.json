@@ -6,11 +6,10 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
-    "@types/styled-react-modal": "^1.2.2",
+    "axios": "^0.26.1",
     "formik": "^2.2.9",
     "framer-motion": "^6.2.8",
     "react": "^18.0.0",
@@ -18,9 +17,11 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-spring": "^8.0.27",
     "styled-components": "^5.3.5",
     "styled-react-modal": "^3.0.0",
     "typescript": "^4.4.2",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.11"
   },
@@ -49,6 +50,9 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.24"
+    "@types/jest": "^27.4.1",
+    "@types/styled-components": "^5.1.24",
+    "@types/styled-react-modal": "^1.2.2",
+    "@types/uuid": "^8.3.4"
   }
 }

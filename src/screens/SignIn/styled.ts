@@ -5,7 +5,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #4588D3, #6D63BE);
+  background: linear-gradient(to right, #f6dd72, #d4910c);
 
   form {
     width: 100%;
@@ -51,8 +51,8 @@ export const Container = styled.div`
       padding: 15px;
       margin-top: 40px;
       border: none;
-      color: #fff;
-      background: linear-gradient(to right, #3A92D8, #874BB1);
+      color: #000;
+      background: linear-gradient(to right, #f6dd72, #d4910c);
 
       &:disabled {
         opacity: 0.6;
@@ -68,7 +68,7 @@ export const Container = styled.div`
       }
 
       a {
-        color: #6e91b2;
+        color: #d4910c;
         text-decoration: none;
       }
     }
