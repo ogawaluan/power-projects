@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import api from '../../services/api';
 import { Motion } from "../../components/Motion";
 import * as S from '../Profile/styled';
+import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 interface IFormData {
   name: string;
@@ -13,6 +15,8 @@ interface IFormData {
 
 const UpdateProjectComponent = () => {
   const navigation = useNavigate();
+  const { addToast } = useToast();
+  const { user } = useAuth();
   const { state } = useLocation();
 
   const updateProjectValidationSchema = yup.object().shape({
@@ -23,9 +27,27 @@ const UpdateProjectComponent = () => {
   });
 
   async function handleOnSubmit(data: IFormData) {
-    await api.put(`/links/${state}`, data);
+    try {
+      Object.assign(data, { ownerId: user.id })
 
-    navigation('/projects');
+      await api.put(`/links/${state}`, data);
+
+      navigation('/projects');
+
+      addToast({
+        type: 'sucess',
+        title: 'Projeto atualizado',
+        description: 'O projeto já está com as informações novas!',
+      });
+    } catch(e) {
+      console.log(e);
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao atualizar um projeto',
+        description: 'Tente novamente',
+      });
+    }
   }
 
   return (

@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 import * as S from './styled';
 
@@ -12,6 +13,7 @@ interface IFormData {
 
 export const SignIn = () => {
   const { signIn } = useAuth();
+  const { addToast } = useToast();
   const navigation = useNavigate();
 
   const loginValidationSchema = yup.object().shape({
@@ -26,12 +28,28 @@ export const SignIn = () => {
   });
 
   async function handleOnSubmit(data: IFormData) {
-    await signIn({
-      email: data.email,
-      password: data.password,
-    });
+    try {
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
+  
+      navigation('/home');
+      
+      addToast({
+        type: 'sucess',
+        title: 'Login autorizado!',
+        description: 'O acesso foi liberado para utilizar a plataforma'
+      });
+    } catch(e) {
+      console.log(e);
 
-    navigation('/home')
+      addToast({
+        type: 'error',
+        title: 'Erro no login',
+        description: 'Tente novamente',
+      });
+    }
   }
 
   return (

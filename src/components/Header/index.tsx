@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import Home from "../../assets/home-solid.svg";
 import Documents from "../../assets/draft.svg";
@@ -13,14 +13,14 @@ export function Header() {
   const [profileClick, setprofileClick] = useState(false);
   const [userLogout, setUserLogout] = useState(false);
   const { signOut, user } = useAuth();
-  const navigation = useNavigate()
-  
+  const navigation = useNavigate()  
   const handleClick = () => setClick(!click);
   const handleProfileClick = () => setprofileClick(!profileClick);
 
   function handleSignOut() {
     setUserLogout(!userLogout);
     signOut();
+    navigation('/');
   }
 
   return (

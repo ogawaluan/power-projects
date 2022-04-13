@@ -5,6 +5,8 @@ import * as yup from 'yup';
 import api from '../../services/api';
 import { Motion } from "../../components/Motion";
 import * as S from '../Projects/styled';
+import { useAuth } from "../../hooks/auth";
+import { useToast } from "../../hooks/toast";
 
 interface IFormData {
   name: string;
@@ -12,6 +14,8 @@ interface IFormData {
 }
 
 const AddProjectComponent = () => {
+  const { addToast } = useToast();
+  const { user } = useAuth();
   const navigation = useNavigate();
 
   const addProjectValidationSchema = yup.object().shape({
@@ -24,9 +28,27 @@ const AddProjectComponent = () => {
   });
 
   async function handleOnSubmit(data: IFormData) {
-    await api.post('/links', data);
+    try {
+      Object.assign(data, { ownerId: user.id });
 
-    navigation('/projects');
+      await api.post('/links', data);
+
+      navigation('/projects');
+
+      addToast({
+        type: 'sucess',
+        title: 'Projeto cadastrado',
+        description: 'Seu projeto já está na nossa plataforma!'
+      });
+    } catch(e) {
+      console.log(e);
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao cadastrar o projeto',
+        description: 'Tente novamente'
+      });
+    }
   }
 
   return (

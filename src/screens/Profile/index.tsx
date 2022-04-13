@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
-import { useCallback, useEffect, useReducer, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 
 import api from '../../services/api';
 import { Motion } from '../../components/Motion';
 import { useAuth } from '../../hooks/auth';
 import * as S from './styled';
+import { useToast } from '../../hooks/toast';
 
 interface ILinkProject {
   id: string;
@@ -23,6 +23,7 @@ interface IFormData {
 const ProfileComponent = () => {
   const [links, setLinks] = useState<ILinkProject[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const { addToast } = useToast();
   const { user } = useAuth();
   const [userData, setUserData] = useState(user);
 
@@ -45,33 +46,49 @@ const ProfileComponent = () => {
   }, []);
 
   async function handleOnSubmit(data: IFormData) {
-    const userInLocalStorage = localStorage.getItem('@PowerProjects:user');
-    let updatedUser
-    
-    if (userInLocalStorage) {
-      updatedUser = {
-        ...JSON.parse(userInLocalStorage),
-        name: data.name === '' ? user.name : data.name,
-        email: data.email === '' ? user.email : data.email,
-      }
-    }
-
-    data.name = data.name === '' ? user.name : data.name; 
-    data.email = data.email === '' ? user.email : data.email; 
-
-    await api.put(`/users/${user.id}`, data).then((res) => {
-      const userResponse = {
-        ...userData,
-        name: res.data.name,
-        email: res.data.email,
-      };
+    try {
+      const userInLocalStorage = localStorage.getItem('@PowerProjects:user');
+      let updatedUser
       
-      setUserData(userResponse);
-    });
+      if (userInLocalStorage) {
+        updatedUser = {
+          ...JSON.parse(userInLocalStorage),
+          name: data.name === '' ? user.name : data.name,
+          email: data.email === '' ? user.email : data.email,
+        }
+      }
 
-    localStorage.setItem('@PowerProjects:user', JSON.stringify(updatedUser));
+      data.name = data.name === '' ? user.name : data.name; 
+      data.email = data.email === '' ? user.email : data.email; 
 
-    toggleModal();
+      await api.put(`/users/${user.id}`, data).then((res) => {
+        const userResponse = {
+          ...userData,
+          name: res.data.name,
+          email: res.data.email,
+        };
+
+        setUserData(userResponse);
+      });
+
+      localStorage.setItem('@PowerProjects:user', JSON.stringify(updatedUser));
+
+      toggleModal();
+
+      addToast({
+        type: 'sucess',
+        title: 'Perfil atualizado',
+        description: 'Seus dados já foram modificados!',
+      });
+    } catch(e) {
+      console.log(e);
+
+      addToast({
+        type: 'error',
+        title: 'Erro ao atualizar o perfil',
+        description: 'Tente novamente',
+      });
+    }
   }
 
   return (

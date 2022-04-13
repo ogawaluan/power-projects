@@ -1,4 +1,4 @@
-import { Routes as Switch, Route, useNavigate, Navigate } from 'react-router-dom';
+import { Routes as Switch, Route, Navigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import { Home } from '../screens/Home';
